@@ -225,6 +225,16 @@ const Landing = (props) => {
                       {bidTypeHandler(merchant).amount ??
                         bidTypeHandler(merchant)}
                     </span>
+                    <span
+                      style={{
+                        display: "block",
+                        color: "#3f3f3f",
+                        fontSize: "small",
+                        textTransform: "capitalize",
+                      }}
+                    >
+                      {bidTypeHandler(merchant).carTitle ?? null}
+                    </span>
                   </TableCell>
                 </TableRow>
               ))}
