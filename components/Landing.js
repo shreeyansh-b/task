@@ -15,6 +15,7 @@ import {
   Button,
 } from "@material-ui/core";
 import _ from "lodash";
+import { useRouter } from "next/router";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -34,6 +35,7 @@ const useStyles = makeStyles({
 });
 
 const Landing = (props) => {
+  const router = useRouter();
   const classes = useStyles();
 
   const [maxBidType, setMaxBidType] = useState(true);
@@ -165,7 +167,16 @@ const Landing = (props) => {
             <TableBody>
               {merchantsForCurrentPage?.map((merchant, index) => (
                 <TableRow hover key={index}>
-                  <TableCell component="th" scope="row" padding="none">
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    padding="none"
+                    onClick={() => {
+                      router.push(`/merchant/${merchant.id}`);
+                    }}
+                    style={{ cursor: "pointer" }}
+                    title={`View ${merchant.firstname} ${merchant.lastname}`}
+                  >
                     <div
                       style={{
                         textTransform: "capitalize",
