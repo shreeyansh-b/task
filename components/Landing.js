@@ -166,15 +166,18 @@ const Landing = (props) => {
             </TableHead>
             <TableBody>
               {merchantsForCurrentPage?.map((merchant, index) => (
-                <TableRow hover key={index}>
+                <TableRow
+                  hover
+                  key={index}
+                  onClick={() => {
+                    router.push(`/merchant/${merchant.id}`);
+                  }}
+                  style={{ cursor: "pointer" }}
+                >
                   <TableCell
                     component="th"
                     scope="row"
                     padding="none"
-                    onClick={() => {
-                      router.push(`/merchant/${merchant.id}`);
-                    }}
-                    style={{ cursor: "pointer" }}
                     title={`View ${merchant.firstname} ${merchant.lastname}`}
                   >
                     <div
