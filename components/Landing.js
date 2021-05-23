@@ -12,6 +12,7 @@ import {
   Avatar,
   Checkbox,
   TableHead,
+  Button,
 } from "@material-ui/core";
 import _ from "lodash";
 
@@ -107,108 +108,126 @@ const Landing = (props) => {
 
   return (
     <Paper className={classes.root}>
-      <TableContainer className={classes.container}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              <TableCell component="th" scope="row">
-                <span>Customer name</span>
-              </TableCell>
-              <TableCell component="th" scope="row">
-                <span>Email</span>
-              </TableCell>
-              <TableCell align="center" component="th" scope="row">
-                <span>Phone</span>
-              </TableCell>
-              <TableCell align="center" component="th" scope="row">
-                <span>Premium user</span>
-              </TableCell>
-              <TableCell align="center" component="th" scope="row">
-                <TableSortLabel
-                  active={currentSortType}
-                  direction={currentSortType ?? ""}
-                  onClick={() => {
-                    setCurrentSortType((prevSortType) => {
-                      if (!prevSortType) {
-                        return "desc";
-                      } else if (prevSortType === "desc") {
-                        return "asc";
-                      } else if (prevSortType === "asc") {
-                        return "desc";
-                      }
-                    });
-                  }}
-                >
-                  <span>{maxBidType ? "Max bid" : "Min bid"}</span>
-                </TableSortLabel>
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {merchantsForCurrentPage?.map((merchant, index) => (
-              <TableRow hover key={index}>
-                <TableCell component="th" scope="row" padding="none">
-                  <div
-                    style={{
-                      textTransform: "capitalize",
-                      display: "flex",
-                      alignItems: "center",
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-end",
+          margin: "1rem",
+        }}
+      >
+        <Button
+          title="Toggle between max and min bid"
+          variant="outlined"
+          color="secondary"
+          size="small"
+          onClick={() => setMaxBidType((prev) => !prev)}
+        >
+          {!maxBidType ? "Max " : "Min "} bid
+        </Button>
+        <TableContainer className={classes.container}>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  <span>Customer name</span>
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  <span>Email</span>
+                </TableCell>
+                <TableCell align="center" component="th" scope="row">
+                  <span>Phone</span>
+                </TableCell>
+                <TableCell align="center" component="th" scope="row">
+                  <span>Premium user</span>
+                </TableCell>
+                <TableCell align="center" component="th" scope="row">
+                  <TableSortLabel
+                    active={currentSortType}
+                    direction={currentSortType ?? ""}
+                    onClick={() => {
+                      setCurrentSortType((prevSortType) => {
+                        if (!prevSortType) {
+                          return "desc";
+                        } else if (prevSortType === "desc") {
+                          return "asc";
+                        } else if (prevSortType === "asc") {
+                          return "desc";
+                        }
+                      });
                     }}
                   >
-                    <Avatar
-                      alt={`${merchant.firstname} ${merchant.lastname}`}
-                      src={merchant.avatarUrl}
-                    />
-                    <span style={{ marginLeft: "10px" }}>
-                      {merchant.firstname} {merchant.lastname}
-                    </span>
-                  </div>
-                </TableCell>
-                <TableCell component="th" scope="row" padding="none">
-                  <span>{merchant.email}</span>
-                </TableCell>
-                <TableCell
-                  align="center"
-                  component="th"
-                  scope="row"
-                  padding="none"
-                >
-                  <span>{merchant.phone}</span>
-                </TableCell>
-                <TableCell
-                  align="center"
-                  component="th"
-                  scope="row"
-                  padding="none"
-                >
-                  <Checkbox checked={merchant.hasPremium} />
-                </TableCell>
-                <TableCell
-                  align="center"
-                  component="th"
-                  scope="row"
-                  padding="none"
-                >
-                  <span>
-                    {bidTypeHandler(merchant).amount ??
-                      bidTypeHandler(merchant)}
-                  </span>
+                    <span>{maxBidType ? "Max bid" : "Min bid"}</span>
+                  </TableSortLabel>
                 </TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[]}
-        component="div"
-        count={response?.length}
-        rowsPerPage={rowsPerPage}
-        page={currentPage}
-        onChangePage={(e, newPage) => {
-          setCurrentPage(newPage);
-        }}
-      />
+            </TableHead>
+            <TableBody>
+              {merchantsForCurrentPage?.map((merchant, index) => (
+                <TableRow hover key={index}>
+                  <TableCell component="th" scope="row" padding="none">
+                    <div
+                      style={{
+                        textTransform: "capitalize",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Avatar
+                        alt={`${merchant.firstname} ${merchant.lastname}`}
+                        src={merchant.avatarUrl}
+                      />
+                      <span style={{ marginLeft: "10px" }}>
+                        {merchant.firstname} {merchant.lastname}
+                      </span>
+                    </div>
+                  </TableCell>
+                  <TableCell component="th" scope="row" padding="none">
+                    <span>{merchant.email}</span>
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    component="th"
+                    scope="row"
+                    padding="none"
+                  >
+                    <span>{merchant.phone}</span>
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    component="th"
+                    scope="row"
+                    padding="none"
+                  >
+                    <Checkbox checked={merchant.hasPremium} />
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    component="th"
+                    scope="row"
+                    padding="none"
+                  >
+                    <span>
+                      {bidTypeHandler(merchant).amount ??
+                        bidTypeHandler(merchant)}
+                    </span>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[]}
+          component="div"
+          count={response?.length}
+          rowsPerPage={rowsPerPage}
+          page={currentPage}
+          onChangePage={(e, newPage) => {
+            setCurrentPage(newPage);
+          }}
+        />
+      </div>
     </Paper>
   );
 };
